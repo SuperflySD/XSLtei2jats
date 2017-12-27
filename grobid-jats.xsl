@@ -18,34 +18,101 @@
     <xsl:template match="tei:teiHeader">
         <front>
             <journal-meta>
-                <journal-title>
-                    <xsl:value-of select="tei:fileDesc/tei:sourceDesc/tei:biblStruct/tei:monogr/tei:title"/>
-                </journal-title>
+                <journal-title-group>
+                    <journal-title>
+                        <xsl:value-of select="tei:fileDesc/tei:sourceDesc/tei:biblStruct/tei:monogr/tei:title"/>
+                    </journal-title>
+                </journal-title-group>
+                <!--need to realise-->
+                <!--<issn ></issn>
+                <issn ></issn>-->
+
+                <!--publisher-->
+                <xsl:for-each select="tei:fileDesc/tei:publicationStmt">
+                    <xsl:for-each select="tei:publisher">
+                        <publisher>
+                            <publisher-name>
+                                <xsl:value-of select="tei:publisher-name"/>
+                            </publisher-name>
+                            <!--need to realise-->
+                            <!--<publisher-loc>
+                                <addr-line></addr-line>
+                                <addr-line></addr-line>
+                                <country></country>
+                            </publisher-loc>-->
+
+                            <!--                     to be moved                                -->
+                            <!--<availability>
+                                <xsl:copy-of select="tei:availability/@*"/>
+                                <xsl:value-of select="tei:availability"/>
+                            </availability>-->
+                        </publisher>
+                        <!--                     to be moved                                -->
+                        <!--  <xsl:for-each select="tei:date">
+                              <date>
+                                  <xsl:copy-of select="@*"/>
+                                  <xsl:value-of select="tei:date"/>
+                              </date>
+                          </xsl:for-each>-->
+                    </xsl:for-each>
+                </xsl:for-each>
             </journal-meta>
             <article-meta>
+                <!-- need to realise-->
+                <!--  <article-id pub-id-type="publisher-id"></article-id>
+                 <article-id pub-id-type="doi"></article-id>
+                 <article-categories>
+                     <subj-group subj-group-type="heading">
+                         <subject></subject>
+                     </subj-group>
+                 </article-categories>-->
+
                 <title-group>
                     <article-title>
                         <xsl:value-of select="tei:fileDesc/tei:titleStmt/tei:title"/>
                     </article-title>
                 </title-group>
 
-                <!--Replace with appropriate JATS tag!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
-                <xsl:for-each select="tei:fileDesc/tei:publicationStmt">
-                    <xsl:for-each select="tei:publisher">
-                        <publisher>
-                            <availability>
-                                <xsl:copy-of select="tei:availability/@*"/>
-                                <xsl:value-of select="tei:availability"/>
-                            </availability>
-                        </publisher>
-                        <xsl:for-each select="tei:date">
-                            <date>
-                                <xsl:copy-of select="@*"/>
-                                <xsl:value-of select="tei:date"/>
-                            </date>
-                        </xsl:for-each>
+                <contrib-group>
+                    <xsl:for-each select="tei:fileDesc/tei:sourceDesc/tei:biblStruct/tei:analytic/tei:author">
+                        <contrib contrib-type="author">
+                            <string-name>
+                                <surname>
+                                    <xsl:value-of select="tei:persName/tei:surname"/>
+                                </surname>
+                                <given-names>
+                                    <xsl:value-of select="tei:persName/tei:forename"/>
+                                </given-names>
+                            </string-name>
+                            <aff rid="aff1">
+                                <department>
+                                    <xsl:value-of select="tei:affiliation/tei:orgName[@type='department']"/>
+                                </department>
+                                <institution>
+                                    <xsl:value-of select="tei:affiliation/tei:orgName[@type='institution']"/>
+                                </institution>
+                                <xsl:for-each select="tei:affiliation/tei:address">
+                                    <address>
+                                        <postCode>
+                                            <xsl:value-of select="tei:postCode"/>
+                                        </postCode>
+                                        <settlement>
+                                            <xsl:value-of select="tei:settlement"/>
+                                        </settlement>
+                                        <country>
+                                            <xsl:copy-of select="tei:country/@*"/>
+                                            <xsl:value-of select="tei:country"/>
+                                        </country>
+                                    </address>
+                                </xsl:for-each>
+                            </aff>
+                        </contrib>
                     </xsl:for-each>
-                </xsl:for-each>
+                </contrib-group>
+
+                <pub-date pub-type="pubDate">
+                    <string-date>20171101</string-date>
+                </pub-date>
 
                 <!--Replace with appropriate JATS tag!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
                 <xsl:for-each select="tei:fileDesc/tei:sourceDesc/tei:biblStruct">
@@ -102,45 +169,6 @@
                 </xsl:for-each>
 
 
-                <contrib-group>
-                    <xsl:for-each select="tei:fileDesc/tei:sourceDesc/tei:biblStruct/tei:analytic/tei:author">
-                        <contrib>
-                            <name>
-                                <surname>
-                                    <xsl:value-of select="tei:persName/tei:surname"/>
-                                </surname>
-                                <given-names>
-                                    <xsl:for-each select="tei:persName/tei:forename">
-                                        <xsl:value-of select="string(.)"/>
-                                    </xsl:for-each>
-                                </given-names>
-                            </name>
-                            <aff>
-                                <named-content content-type="department">
-                                    <xsl:value-of select="tei:affiliation/tei:orgName[@type='department']"/>
-                                </named-content>
-                                <named-content content-type="institution">
-                                    <xsl:value-of select="tei:affiliation/tei:orgName[@type='institution']"/>
-                                </named-content>
-                                <xsl:for-each select="tei:affiliation/tei:address">
-                                    <address>
-                                        <postCode>
-                                            <xsl:value-of select="tei:postCode"/>
-                                        </postCode>
-                                        <settlement>
-                                            <xsl:value-of select="tei:settlement"/>
-                                        </settlement>
-                                        <country>
-                                            <xsl:copy-of select="tei:country/@*"/>
-                                            <xsl:value-of select="tei:country"/>
-                                        </country>
-                                    </address>
-                                </xsl:for-each>
-
-                            </aff>
-                        </contrib>
-                    </xsl:for-each>
-                </contrib-group>
                 <abstract>
                     <xsl:apply-templates select="tei:profileDesc/tei:abstract"/>
                 </abstract>
@@ -159,7 +187,7 @@
                     </title>
                     <xsl:for-each select="tei:p">
                         <p>
-                            <xsl:value-of select="string(self::node()/text()[1])"/>
+                            <xsl:value-of select="string(./text()[1])"/>
                             <xsl:for-each select="tei:ref">
                                 <xsl:variable name="index" select="position()"/>
 
@@ -168,7 +196,7 @@
                                     <xsl:value-of select="string(.)"/>
                                 </ref>
 
-                                <xsl:value-of select="string(parent::node()/text()[$index+1])"/>
+                                <xsl:value-of select="string(../text()[$index+1])"/>
                             </xsl:for-each>
                         </p>
                     </xsl:for-each>
@@ -176,9 +204,13 @@
             </xsl:for-each>
             <xsl:for-each select="tei:figure">
                 <figure>
-                    <p>
+                    <title>
                         <xsl:value-of select="tei:head"/>
-                    </p>
+                    </title>
+                    <figDesc>
+                        <xsl:value-of select="tei:figDesc"/>
+                    </figDesc>
+
                 </figure>
             </xsl:for-each>
             <xsl:for-each select="tei:note">
@@ -196,24 +228,22 @@
         <back>
             <xsl:for-each select="tei:div">
                 <xsl:for-each select="tei:div">
-                    <p>
-                        <title>
-                            <xsl:value-of select="tei:head"/>
-                        </title>
-                        <xsl:for-each select="tei:p">
-                            <p>
-                                <xsl:value-of select="string(self::node()/text()[1])"/>
-                                <xsl:for-each select="tei:ref">
-                                    <xsl:variable name="index" select="position()"/>
-                                    <ref>
-                                        <xsl:copy-of select="@*"/>
-                                        <xsl:value-of select="string(.)"/>
-                                    </ref>
-                                    <xsl:value-of select="string(parent::node()/text()[$index+1])"/>
-                                </xsl:for-each>
-                            </p>
-                        </xsl:for-each>
-                    </p>
+                    <title>
+                        <xsl:value-of select="tei:head"/>
+                    </title>
+                    <xsl:for-each select="tei:p">
+                        <p>
+                            <xsl:value-of select="string(self::node()/text()[1])"/>
+                            <xsl:for-each select="tei:ref">
+                                <xsl:variable name="index" select="position()"/>
+                                <ref>
+                                    <xsl:copy-of select="@*"/>
+                                    <xsl:value-of select="string(.)"/>
+                                </ref>
+                                <xsl:value-of select="string(parent::node()/text()[$index+1])"/>
+                            </xsl:for-each>
+                        </p>
+                    </xsl:for-each>
                 </xsl:for-each>
             </xsl:for-each>
 
