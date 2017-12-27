@@ -18,11 +18,13 @@
     <xsl:template match="tei:teiHeader">
         <front>
             <journal-meta>
-                <journal-title-group>
-                    <journal-title>
-                        <xsl:value-of select="tei:fileDesc/tei:sourceDesc/tei:biblStruct/tei:monogr/tei:title"/>
-                    </journal-title>
-                </journal-title-group>
+                <xsl:if test="tei:fileDesc/tei:sourceDesc/tei:biblStruct/tei:monogr/tei:title">
+                    <journal-title-group>
+                        <journal-title>
+                            <xsl:value-of select="tei:fileDesc/tei:sourceDesc/tei:biblStruct/tei:monogr/tei:title"/>
+                        </journal-title>
+                    </journal-title-group>
+                </xsl:if>
                 <!--need to realise-->
                 <!--<issn ></issn>
                 <issn ></issn>-->
@@ -47,13 +49,6 @@
                                 <xsl:value-of select="tei:availability"/>
                             </availability>-->
                         </publisher>
-                        <!--                     to be moved                                -->
-                        <!--  <xsl:for-each select="tei:date">
-                              <date>
-                                  <xsl:copy-of select="@*"/>
-                                  <xsl:value-of select="tei:date"/>
-                              </date>
-                          </xsl:for-each>-->
                     </xsl:for-each>
                 </xsl:for-each>
             </journal-meta>
@@ -110,9 +105,16 @@
                     </xsl:for-each>
                 </contrib-group>
 
-                <pub-date pub-type="pubDate">
-                    <string-date>20171101</string-date>
-                </pub-date>
+                <!--may be incorrect-->
+                <xsl:for-each select="tei:fileDesc/tei:publicationStmt/tei:publisher/tei:date">
+                    <pub-date>
+                        <xsl:copy-of select="@*"/>
+                        <string-date>
+                            <xsl:value-of select="string(.)"/>
+                        </string-date>
+                    </pub-date>
+                </xsl:for-each>
+
 
                 <!--Replace with appropriate JATS tag!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
                 <xsl:for-each select="tei:fileDesc/tei:sourceDesc/tei:biblStruct">
@@ -156,16 +158,16 @@
 
                 </xsl:for-each>
 
-                <!--Replace with keywords-->
-
                 <xsl:for-each select="tei:profileDesc/tei:textClass/tei:keywords">
-                    <keywords>
+                    <kwd-group kwd-group-type="author">
+                        <title><bold>Keywords:</bold> 
+                        </title>
                         <xsl:for-each select="tei:term">
-                            <term>
+                            <kwd>
                                 <xsl:value-of select="string(.)"/>
-                            </term>
+                            </kwd>
                         </xsl:for-each>
-                    </keywords>
+                    </kwd-group>
                 </xsl:for-each>
 
 
