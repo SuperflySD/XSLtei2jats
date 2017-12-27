@@ -266,7 +266,7 @@
                                 <!--Conference-->
                                 <xsl:if test="tei:monogr/tei:meeting">
                                     <conf-name>
-                                        <xsl:value-of select="tei:monogr/tei:meeting"/>
+                                        <xsl:value-of select="tei:monogr/tei:meeting/text()"/>
                                     </conf-name>
                                     <xsl:if test="tei:monogr/tei:meeting/tei:address">
                                         <conf-loc>
