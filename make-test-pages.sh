@@ -21,5 +21,5 @@ else
 fi
 
 
-  java -jar $SAXON9 -xsl:grobid-jats.xsl -s:"When Off Campus Means Virtual Campus The Academic Library in Second Life.pdf.tei.xml"> WhenOff-conv.xml
+  java -jar $SAXON9 -xsl:grobid-jats.xsl -s:"p253-barberis.pdf.tei.xml"> result-JATS.xml
 

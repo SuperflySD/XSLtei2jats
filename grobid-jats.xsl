@@ -30,30 +30,27 @@
                 </title-group>
 
                 <!--Replace with appropriate JATS tag!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
-                <xsl:for-each select="tei:fileDesc">
-                    <xsl:for-each select="tei:publicationStmt">
-                        <REPLACE-WITH-PUBLISHER>
-                            <publisher>
-                                <xsl:value-of select="tei:publisher"/>
-                            </publisher>
+                <xsl:for-each select="tei:fileDesc/tei:publicationStmt">
+                    <xsl:for-each select="tei:publisher">
+                        <publisher>
                             <availability>
-                                <xsl:copy-of select="@*"/>
-                                <p>
-                                    <xsl:value-of select="tei:availability"/>
-                                </p>
+                                <xsl:copy-of select="tei:availability/@*"/>
+                                <xsl:value-of select="tei:availability"/>
                             </availability>
+                        </publisher>
+                        <xsl:for-each select="tei:date">
                             <date>
                                 <xsl:copy-of select="@*"/>
                                 <xsl:value-of select="tei:date"/>
                             </date>
-                        </REPLACE-WITH-PUBLISHER>
+                        </xsl:for-each>
                     </xsl:for-each>
                 </xsl:for-each>
 
                 <!--Replace with appropriate JATS tag!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
                 <xsl:for-each select="tei:fileDesc/tei:sourceDesc/tei:biblStruct">
                     <xsl:for-each select="tei:monogr">
-                        <REPLACE-WITH-monogr>
+                        <monogr>
                             <xsl:for-each select="tei:title">
                                 <title>
                                     <xsl:copy-of select="@*"/>
@@ -74,19 +71,22 @@
                                     </biblScope>
                                 </xsl:for-each>
                             </xsl:for-each>
-                        </REPLACE-WITH-monogr>
+                        </monogr>
                     </xsl:for-each>
+
                     <xsl:for-each select="tei:idno">
                         <idno>
                             <xsl:copy-of select="@*"/>
                             <xsl:value-of select="string(.)"/>
                         </idno>
                     </xsl:for-each>
+
                     <xsl:for-each select="tei:note">
                         <note>
                             <xsl:value-of select="string(.)"/>
                         </note>
                     </xsl:for-each>
+
                 </xsl:for-each>
 
                 <!--Replace with keywords-->
@@ -116,10 +116,27 @@
                                 </given-names>
                             </name>
                             <aff>
-                                <xsl:value-of select="tei:affiliation/tei:orgName[@type='institution']"/>
-                                <named-content content-type="dept">
+                                <named-content content-type="department">
                                     <xsl:value-of select="tei:affiliation/tei:orgName[@type='department']"/>
                                 </named-content>
+                                <named-content content-type="institution">
+                                    <xsl:value-of select="tei:affiliation/tei:orgName[@type='institution']"/>
+                                </named-content>
+                                <xsl:for-each select="tei:affiliation/tei:address">
+                                    <address>
+                                        <postCode>
+                                            <xsl:value-of select="tei:postCode"/>
+                                        </postCode>
+                                        <settlement>
+                                            <xsl:value-of select="tei:settlement"/>
+                                        </settlement>
+                                        <country>
+                                            <xsl:copy-of select="tei:country/@*"/>
+                                            <xsl:value-of select="tei:country"/>
+                                        </country>
+                                    </address>
+                                </xsl:for-each>
+
                             </aff>
                         </contrib>
                     </xsl:for-each>
