@@ -7,6 +7,10 @@
                 exclude-result-prefixes="xlink xs mml tei"
                 version="1.0">
 
+    <xsl:variable name="document-uri" select="document-uri(.)"/>
+    <xsl:variable name="filename" select="(tokenize($document-uri,'/'))[last()]"/>
+    <xsl:variable name="prefix" select="substring-before($filename, '.')"/>
+
     <xsl:template match="/">
         <article article-type="research-article">
             <xsl:apply-templates select="tei:TEI/tei:teiHeader"/>
@@ -181,7 +185,7 @@
     <xsl:template match="tei:text/tei:body">
         <body>
             <xsl:for-each select="tei:div">
-                <sec>
+                <sec id="{concat('section',string(position()),'-',$prefix)}">
                     <title>
                         <xsl:value-of select="tei:head"/>
                     </title>
