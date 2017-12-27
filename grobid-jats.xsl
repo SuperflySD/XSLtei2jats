@@ -36,12 +36,14 @@
                             <publisher>
                                 <xsl:value-of select="tei:publisher"/>
                             </publisher>
-                            <availability status="{tei:availability/attribute::status}">
+                            <availability>
+                                <xsl:copy-of select="@*"/>
                                 <p>
                                     <xsl:value-of select="tei:availability"/>
                                 </p>
                             </availability>
-                            <date type="{tei:date/attribute::type}" when="{tei:date/attribute::when}">
+                            <date>
+                                <xsl:copy-of select="@*"/>
                                 <xsl:value-of select="tei:date"/>
                             </date>
                         </REPLACE-WITH-PUBLISHER>
@@ -53,18 +55,21 @@
                     <xsl:for-each select="tei:monogr">
                         <REPLACE-WITH-monogr>
                             <xsl:for-each select="tei:title">
-                                <title level="{attribute::level}" type="{attribute::type}">
+                                <title>
+                                    <xsl:copy-of select="@*"/>
                                     <xsl:value-of select="string(.)"/>
                                 </title>
                             </xsl:for-each>
                             <xsl:for-each select="tei:indo">
-                                <idno type="{attribute::type}">
+                                <idno>
+                                    <xsl:copy-of select="@*"/>
                                     <xsl:value-of select="string(.)"/>
                                 </idno>
                             </xsl:for-each>
                             <xsl:for-each select="tei:imprint">
                                 <xsl:for-each select="tei:biblScope">
-                                    <biblScope unit="{attribute::unit}" from="{attribute::from}" to="{attribute::to}">
+                                    <biblScope>
+                                        <xsl:copy-of select="@*"/>
                                         <xsl:value-of select="string(.)"/>
                                     </biblScope>
                                 </xsl:for-each>
@@ -72,7 +77,8 @@
                         </REPLACE-WITH-monogr>
                     </xsl:for-each>
                     <xsl:for-each select="tei:idno">
-                        <idno type="{attribute::type}">
+                        <idno>
+                            <xsl:copy-of select="@*"/>
                             <xsl:value-of select="string(.)"/>
                         </idno>
                     </xsl:for-each>
@@ -130,7 +136,7 @@
     <xsl:template match="tei:text/tei:body">
         <body>
             <xsl:for-each select="tei:div">
-                <p>
+                <sec>
                     <title>
                         <xsl:value-of select="tei:head"/>
                     </title>
@@ -139,14 +145,17 @@
                             <xsl:value-of select="string(self::node()/text()[1])"/>
                             <xsl:for-each select="tei:ref">
                                 <xsl:variable name="index" select="position()"/>
-                                <ref type="{attribute::type}">
+
+                                <ref>
+                                    <xsl:copy-of select="@*"/>
                                     <xsl:value-of select="string(.)"/>
                                 </ref>
+
                                 <xsl:value-of select="string(parent::node()/text()[$index+1])"/>
                             </xsl:for-each>
                         </p>
                     </xsl:for-each>
-                </p>
+                </sec>
             </xsl:for-each>
             <xsl:for-each select="tei:figure">
                 <figure>
@@ -156,7 +165,8 @@
                 </figure>
             </xsl:for-each>
             <xsl:for-each select="tei:note">
-                <note place="{attribute::place}" n="{attribute::n}">
+                <note>
+                    <xsl:copy-of select="@*"/>
                     <xsl:value-of select="string(.)"/>
                 </note>
             </xsl:for-each>
@@ -178,7 +188,8 @@
                                 <xsl:value-of select="string(self::node()/text()[1])"/>
                                 <xsl:for-each select="tei:ref">
                                     <xsl:variable name="index" select="position()"/>
-                                    <ref type="{attribute::type}">
+                                    <ref>
+                                        <xsl:copy-of select="@*"/>
                                         <xsl:value-of select="string(.)"/>
                                     </ref>
                                     <xsl:value-of select="string(parent::node()/text()[$index+1])"/>
