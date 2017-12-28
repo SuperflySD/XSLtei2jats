@@ -84,9 +84,11 @@
                                 </given-names>
                             </string-name>
                             <aff rid="aff1">
-                                <department>
-                                    <xsl:value-of select="tei:affiliation/tei:orgName[@type='department']"/>
-                                </department>
+                                <xsl:for-each select="tei:affiliation/tei:orgName[@type='department']">
+                                    <department>
+                                        <xsl:value-of select="string(.)"/>
+                                    </department>
+              "tei:fileDesc/tei:sourceDesc/tei:biblStruct/tei:analytic/tei:author"                  </xsl:for-each>
                                 <institution>
                                     <xsl:value-of select="tei:affiliation/tei:orgName[@type='institution']"/>
                                 </institution>
@@ -373,10 +375,10 @@
 
         <!--Page-->
         <!--<xsl:if test="tei:monogr/tei:imprint/tei:biblScope[@unit='page'] | not(tei:monogr/tei:imprint/tei:biblScope[@from]) | not(tei:monogr/tei:imprint/tei:biblScope[@to])">-->
-            <!--<fpage><xsl:value-of select="tei:monogr/tei:imprint/tei:biblScope[@unit='page']"/></fpage>-->
-            <!--<lpage><xsl:value-of select="tei:monogr/tei:imprint/tei:biblScope[@unit='page']"/></lpage>-->
+        <!--<fpage><xsl:value-of select="tei:monogr/tei:imprint/tei:biblScope[@unit='page']"/></fpage>-->
+        <!--<lpage><xsl:value-of select="tei:monogr/tei:imprint/tei:biblScope[@unit='page']"/></lpage>-->
         <!--</xsl:if>-->
-        
+
         <!--Page from-->
         <xsl:if test="tei:monogr/tei:imprint/tei:biblScope[@unit='page']/@from">
             <fpage>
