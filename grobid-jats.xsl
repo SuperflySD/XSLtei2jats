@@ -255,138 +255,179 @@
 
             <!--references-->
             <xsl:if test="tei:div[@type='references']">
+
                 <ref-list>
                     <title>References</title>
 
                     <xsl:for-each select="tei:div[@type='references']/tei:listBibl/tei:biblStruct">
+
                         <ref id="{attribute::xml:id}">
+                            <xsl:choose>
 
-                            <mixed-citation publication-type="journal">
+                                <xsl:when test="not(tei:analytic/tei:title)">
+                                    <mixed-citation publication-type="book">
+                                        <xsl:apply-templates select="."/>
+                                    </mixed-citation>
+                                </xsl:when>
 
-                                <!--Authors-->
-                                <xsl:if test="tei:analytic/tei:author | tei:monogr/tei:author">
-                                    <person-group person-group-type="author">
-                                        <xsl:for-each select="tei:analytic/tei:author | tei:monogr/tei:author">
-                                            <name>
-                                                <xsl:if test="tei:persName/tei:surname">
-                                                    <surname>
-                                                        <xsl:value-of select="tei:persName/tei:surname"/>
-                                                    </surname>
-                                                </xsl:if>
-                                                <xsl:if test="tei:persName/tei:forename">
-                                                    <given-names>
-                                                        <xsl:for-each select="tei:persName/tei:forename">
-                                                            <xsl:value-of select="."/>&#160;
-                                                        </xsl:for-each>
-                                                    </given-names>
-                                                </xsl:if>
-                                            </name>
-                                        </xsl:for-each>
-                                    </person-group>
-                                </xsl:if>
+                                <xsl:otherwise>
+                                    <mixed-citation publication-type="journal">
+                                        <xsl:apply-templates select="."/>
+                                    </mixed-citation>
+                                </xsl:otherwise>
+                            </xsl:choose>
 
-                                <!--Date-->
-                                <xsl:if test="tei:monogr/tei:imprint/tei:date/@when">
-                                    <date>
-                                        <xsl:value-of select="tei:monogr/tei:imprint/tei:date/@when"/>
-                                    </date>
-                                </xsl:if>
-
-                                <!--Publisher-->
-                                <xsl:if test="tei:monogr/tei:imprint/tei:publisher">
-                                    <publisher-name>
-                                        <xsl:value-of select="tei:monogr/tei:imprint/tei:publisher"/>
-                                    </publisher-name>
-                                </xsl:if>
-
-                                <!--Conference-->
-                                <xsl:if test="tei:monogr/tei:meeting">
-                                    <conf-name>
-                                        <xsl:value-of select="tei:monogr/tei:meeting/text()"/>
-                                    </conf-name>
-                                    <xsl:if test="tei:monogr/tei:meeting/tei:address">
-                                        <conf-loc>
-                                            <xsl:value-of select="tei:monogr/tei:meeting/tei:address/tei:addrLine"/>
-                                        </conf-loc>
-                                    </xsl:if>
-                                </xsl:if>
-
-                                <!--Article title-->
-                                <xsl:if test="tei:analytic/tei:title">
-                                    <article-title>
-                                        <xsl:value-of select="tei:analytic/tei:title"/>
-                                    </article-title>
-                                </xsl:if>
-
-                                <!--Journal title-->
-                                <xsl:if test="tei:monogr/tei:title">
-                                    <source>
-                                        <xsl:value-of select="tei:monogr/tei:title"/>
-                                    </source>
-                                </xsl:if>
-
-                                <!--Volume-->
-                                <xsl:if test="tei:monogr/tei:imprint/tei:biblScope[@unit='volume']">
-                                    <volume>
-                                        <xsl:value-of
-                                                select="tei:monogr/tei:imprint/tei:biblScope[@unit='volume']"/>
-                                    </volume>
-                                </xsl:if>
-
-                                <!--Issue-->
-                                <xsl:if test="tei:monogr/tei:imprint/tei:biblScope[@unit='issue']">
-                                    <issue>
-                                        <xsl:value-of
-                                                select="tei:monogr/tei:imprint/tei:biblScope[@unit='issue']"/>
-                                    </issue>
-                                </xsl:if>
-
-                                <!--Page from-->
-                                <xsl:if test="tei:monogr/tei:imprint/tei:biblScope[@unit='page']/@from">
-                                    <fpage>
-                                        <xsl:value-of
-                                                select="tei:monogr/tei:imprint/tei:biblScope[@unit='page']/@from"/>
-                                    </fpage>
-                                </xsl:if>
-
-                                <!--Page to-->
-                                <xsl:if test="tei:monogr/tei:imprint/tei:biblScope[@unit='page']/@to">
-                                    <lpage>
-                                        <xsl:value-of
-                                                select="tei:monogr/tei:imprint/tei:biblScope[@unit='page']/@to"/>
-                                    </lpage>
-                                </xsl:if>
-
-                                <!--URL-->
-                                <xsl:if test="tei:monogr/tei:ptr[@target]">
-                                    <uri>
-                                        <xsl:value-of
-                                                select="tei:monogr/tei:ptr/@target"/>
-                                    </uri>
-                                </xsl:if>
-
-                                <!--ISSN-->
-                                <xsl:if test="tei:monogr/tei:idno[@type='ISSN']">
-                                    <issn>
-                                        <xsl:value-of select="tei:monogr/tei:idno[@type='ISSN']"/>
-                                    </issn>
-                                </xsl:if>
-
-                                <!--DOI/ISSN-L-->
-                                <xsl:if test="tei:analytic/tei:idno[@type='doi']">
-                                    <issn-l>
-                                        <xsl:value-of select="tei:analytic/tei:idno[@type='doi']"/>
-                                    </issn-l>
-                                </xsl:if>
-
-                            </mixed-citation>
                         </ref>
                     </xsl:for-each>
-
                 </ref-list>
             </xsl:if>
 
         </back>
+    </xsl:template>
+
+    <!--Single book or article template-->
+    <xsl:template match="tei:biblStruct">
+
+        <!--Authors-->
+        <xsl:if test="tei:analytic/tei:author | tei:monogr/tei:author">
+            <person-group person-group-type="author">
+                <xsl:for-each select="tei:analytic/tei:author | tei:monogr/tei:author">
+                    <name>
+                        <xsl:if test="tei:persName/tei:surname">
+                            <surname>
+                                <xsl:value-of select="tei:persName/tei:surname"/>
+                            </surname>
+                        </xsl:if>
+                        <xsl:if test="tei:persName/tei:forename">
+                            <given-names>
+                                <xsl:for-each select="tei:persName/tei:forename">
+                                    <xsl:value-of select="."/>&#160;
+                                </xsl:for-each>
+                            </given-names>
+                        </xsl:if>
+                    </name>
+                </xsl:for-each>
+            </person-group>
+        </xsl:if>
+
+        <!--Article title-->
+        <xsl:if test="tei:analytic/tei:title">
+            <article-title>
+                <xsl:value-of select="tei:analytic/tei:title"/>
+            </article-title>
+        </xsl:if>
+
+        <!--Journal title-->
+        <xsl:if test="tei:monogr/tei:title">
+            <source>
+                <xsl:value-of select="tei:monogr/tei:title"/>
+            </source>
+        </xsl:if>
+
+        <!--Date-->
+        <xsl:if test="tei:monogr/tei:imprint/tei:date/@when">
+            <date>
+                <xsl:value-of select="tei:monogr/tei:imprint/tei:date/@when"/>
+            </date>
+        </xsl:if>
+
+        <!--Publisher-->
+        <xsl:if test="tei:monogr/tei:imprint/tei:publisher">
+            <publisher-name>
+                <xsl:value-of select="tei:monogr/tei:imprint/tei:publisher"/>
+            </publisher-name>
+        </xsl:if>
+        <xsl:if test="tei:monogr/tei:imprint/tei:pubPlace">
+            <publisher-loc>
+                <xsl:value-of select="tei:monogr/tei:imprint/tei:pubPlace"/>
+            </publisher-loc>
+        </xsl:if>
+
+        <!--Conference-->
+        <xsl:if test="tei:monogr/tei:meeting">
+            <conf-name>
+                <xsl:value-of select="tei:monogr/tei:meeting/text()"/>
+            </conf-name>
+            <xsl:if test="tei:monogr/tei:meeting/tei:address">
+                <conf-loc>
+                    <xsl:value-of select="tei:monogr/tei:meeting/tei:address/tei:addrLine"/>
+                </conf-loc>
+            </xsl:if>
+        </xsl:if>
+
+        <!--Volume-->
+        <xsl:if test="tei:monogr/tei:imprint/tei:biblScope[@unit='volume']">
+            <volume>
+                <xsl:value-of
+                        select="tei:monogr/tei:imprint/tei:biblScope[@unit='volume']"/>
+            </volume>
+        </xsl:if>
+
+        <!--Issue-->
+        <xsl:if test="tei:monogr/tei:imprint/tei:biblScope[@unit='issue']">
+            <issue>
+                <xsl:value-of
+                        select="tei:monogr/tei:imprint/tei:biblScope[@unit='issue']"/>
+            </issue>
+        </xsl:if>
+
+        <!--Page-->
+        <!--<xsl:if test="tei:monogr/tei:imprint/tei:biblScope[@unit='page'] | not(tei:monogr/tei:imprint/tei:biblScope[@from]) | not(tei:monogr/tei:imprint/tei:biblScope[@to])">-->
+            <!--<fpage><xsl:value-of select="tei:monogr/tei:imprint/tei:biblScope[@unit='page']"/></fpage>-->
+            <!--<lpage><xsl:value-of select="tei:monogr/tei:imprint/tei:biblScope[@unit='page']"/></lpage>-->
+        <!--</xsl:if>-->
+        
+        <!--Page from-->
+        <xsl:if test="tei:monogr/tei:imprint/tei:biblScope[@unit='page']/@from">
+            <fpage>
+                <xsl:value-of
+                        select="tei:monogr/tei:imprint/tei:biblScope[@unit='page']/@from"/>
+            </fpage>
+        </xsl:if>
+
+        <!--Page to-->
+        <xsl:if test="tei:monogr/tei:imprint/tei:biblScope[@unit='page']/@to">
+            <lpage>
+                <xsl:value-of
+                        select="tei:monogr/tei:imprint/tei:biblScope[@unit='page']/@to"/>
+            </lpage>
+        </xsl:if>
+
+        <!--URL-->
+        <xsl:if test="tei:monogr/tei:ptr[@target]">
+            <uri>
+                <xsl:value-of
+                        select="tei:monogr/tei:ptr/@target"/>
+            </uri>
+        </xsl:if>
+        <xsl:if test="tei:analytic/tei:ptr[@target]">
+            <uri>
+                <xsl:value-of
+                        select="tei:analytic/tei:ptr/@target"/>
+            </uri>
+        </xsl:if>
+
+        <!--ISSN-->
+        <xsl:if test="tei:monogr/tei:idno[@type='ISSN']">
+            <issn>
+                <xsl:value-of select="tei:monogr/tei:idno[@type='ISSN']"/>
+            </issn>
+        </xsl:if>
+
+        <!--DOI/ISSN-L-->
+        <xsl:if test="tei:analytic/tei:idno[@type='doi']">
+            <issn-l>
+                <xsl:value-of select="tei:analytic/tei:idno[@type='doi']"/>
+            </issn-l>
+        </xsl:if>
+
+        <!--Note-->
+        <xsl:if test="tei:note">
+            <comment>
+                <xsl:value-of select="tei:note"/>
+            </comment>
+        </xsl:if>
+
     </xsl:template>
 
 </xsl:stylesheet>
