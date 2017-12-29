@@ -38,7 +38,7 @@
                     <xsl:for-each select="tei:publisher">
                         <publisher>
                             <publisher-name>
-                                <xsl:value-of select="tei:publisher-name"/>
+                                <xsl:value-of select="string(.)"/>
                             </publisher-name>
                             <!--need to realise-->
                             <!--<publisher-loc>
@@ -88,7 +88,8 @@
                                     <department>
                                         <xsl:value-of select="string(.)"/>
                                     </department>
-              "tei:fileDesc/tei:sourceDesc/tei:biblStruct/tei:analytic/tei:author"                  </xsl:for-each>
+                                    "tei:fileDesc/tei:sourceDesc/tei:biblStruct/tei:analytic/tei:author"
+                                </xsl:for-each>
                                 <institution>
                                     <xsl:value-of select="tei:affiliation/tei:orgName[@type='institution']"/>
                                 </institution>
@@ -111,10 +112,9 @@
                     </xsl:for-each>
                 </contrib-group>
 
-                <!--may be incorrect-->
-                <xsl:for-each select="tei:fileDesc/tei:publicationStmt/tei:publisher/tei:date">
+
+                <xsl:for-each select="tei:fileDesc/tei:publicationStmt/tei:date">
                     <pub-date>
-                        <xsl:copy-of select="@*"/>
                         <string-date>
                             <xsl:value-of select="string(.)"/>
                         </string-date>
@@ -176,6 +176,14 @@
                     </kwd-group>
                 </xsl:for-each>
 
+                <xsl:if test="tei:fileDesc/tei:publicationStmt/tei:availability/tei:p">
+                    <permissions>
+                        <copyright-statement>
+                            <xsl:value-of select="tei:fileDesc/tei:publicationStmt/tei:availability/tei:p"/>
+                        </copyright-statement>
+                        <!--<copyright-year>2017</copyright-year>-->
+                    </permissions>
+                </xsl:if>
 
                 <abstract>
                     <xsl:apply-templates select="tei:profileDesc/tei:abstract"/>
