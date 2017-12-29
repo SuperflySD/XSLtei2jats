@@ -374,25 +374,29 @@
         </xsl:if>
 
         <!--Page-->
-        <!--<xsl:if test="tei:monogr/tei:imprint/tei:biblScope[@unit='page'] | not(tei:monogr/tei:imprint/tei:biblScope[@from]) | not(tei:monogr/tei:imprint/tei:biblScope[@to])">-->
-        <!--<fpage><xsl:value-of select="tei:monogr/tei:imprint/tei:biblScope[@unit='page']"/></fpage>-->
-        <!--<lpage><xsl:value-of select="tei:monogr/tei:imprint/tei:biblScope[@unit='page']"/></lpage>-->
-        <!--</xsl:if>-->
+        <xsl:if test="tei:monogr/tei:imprint/tei:biblScope[@unit='page']">
+            <xsl:choose>
+                <xsl:when
+                        test="tei:monogr/tei:imprint/tei:biblScope[@unit='page']/@from | tei:monogr/tei:imprint/tei:biblScope[@unit='page']/@to">
+                    <fpage>
+                        <xsl:value-of
+                                select="tei:monogr/tei:imprint/tei:biblScope[@unit='page']/@from"/>
+                    </fpage>
+                    <lpage>
+                        <xsl:value-of
+                                select="tei:monogr/tei:imprint/tei:biblScope[@unit='page']/@to"/>
+                    </lpage>
+                </xsl:when>
 
-        <!--Page from-->
-        <xsl:if test="tei:monogr/tei:imprint/tei:biblScope[@unit='page']/@from">
-            <fpage>
-                <xsl:value-of
-                        select="tei:monogr/tei:imprint/tei:biblScope[@unit='page']/@from"/>
-            </fpage>
-        </xsl:if>
-
-        <!--Page to-->
-        <xsl:if test="tei:monogr/tei:imprint/tei:biblScope[@unit='page']/@to">
-            <lpage>
-                <xsl:value-of
-                        select="tei:monogr/tei:imprint/tei:biblScope[@unit='page']/@to"/>
-            </lpage>
+                <xsl:otherwise>
+                    <fpage>
+                        <xsl:value-of select="tei:monogr/tei:imprint/tei:biblScope[@unit='page']"/>
+                    </fpage>
+                    <lpage>
+                        <xsl:value-of select="tei:monogr/tei:imprint/tei:biblScope[@unit='page']"/>
+                    </lpage>
+                </xsl:otherwise>
+            </xsl:choose>
         </xsl:if>
 
         <!--URL-->
