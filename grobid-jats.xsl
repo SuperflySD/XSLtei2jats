@@ -453,6 +453,21 @@
             </issn-l>
         </xsl:if>
 
+        <!--Editor-->
+        <xsl:if test="tei:monogr/tei:editor">
+            <comment>
+                Editors:
+                <xsl:value-of select="tei:monogr/tei:editor"/>
+            </comment>
+        </xsl:if>
+
+        <!--Organization/Institute-->
+        <xsl:if test="tei:monogr/tei:respStmt/tei:orgName">
+            <institution>
+                <xsl:value-of select="tei:monogr/tei:respStmt/tei:orgName"/>
+            </institution>
+        </xsl:if>
+
         <!--Note-->
         <xsl:if test="tei:note">
             <comment>
