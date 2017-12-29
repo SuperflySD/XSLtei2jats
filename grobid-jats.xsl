@@ -88,23 +88,28 @@
                                     <department>
                                         <xsl:value-of select="string(.)"/>
                                     </department>
-                                    "tei:fileDesc/tei:sourceDesc/tei:biblStruct/tei:analytic/tei:author"
                                 </xsl:for-each>
                                 <institution>
                                     <xsl:value-of select="tei:affiliation/tei:orgName[@type='institution']"/>
                                 </institution>
                                 <xsl:for-each select="tei:affiliation/tei:address">
                                     <address>
-                                        <postCode>
-                                            <xsl:value-of select="tei:postCode"/>
-                                        </postCode>
-                                        <settlement>
-                                            <xsl:value-of select="tei:settlement"/>
-                                        </settlement>
-                                        <country>
-                                            <xsl:copy-of select="tei:country/@*"/>
-                                            <xsl:value-of select="tei:country"/>
-                                        </country>
+                                        <xsl:if test="tei:postCode">
+                                            <postCode>
+                                                <xsl:value-of select="tei:postCode"/>
+                                            </postCode>
+                                        </xsl:if>
+                                        <xsl:if test="tei:settlement">
+                                            <settlement>
+                                                <xsl:value-of select="tei:settlement"/>
+                                            </settlement>
+                                        </xsl:if>
+                                        <xsl:if test="tei:country">
+                                            <country>
+                                                <xsl:copy-of select="tei:country/@*"/>
+                                                <xsl:value-of select="tei:country"/>
+                                            </country>
+                                        </xsl:if>
                                     </address>
                                 </xsl:for-each>
                             </aff>
