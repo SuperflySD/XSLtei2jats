@@ -23,5 +23,6 @@ fi
 
 #  java -jar $SAXON9 -xsl:grobid-jats.xsl -s:"123727552.pdf.tei.xml"> result-JATS.xml
 #  java -jar $SAXON9 -xsl:grobid-jats.xsl -s:"p253-barberis.pdf.tei.xml"> JATS-p253-barberis.xml
-   java -jar $SAXON9 -xsl:grobid-jats.xsl -s:"125773301.pdf.tei.xml">JATS-125773301.xml
+  # java -jar $SAXON9 -xsl:grobid-jats.xsl -s:"125773301.pdf.tei.xml">JATS-125773301.xml
+   java -jar $SAXON9 -xsl:grobid-jats.xsl -s:"125996705.pdf.tei.xml">JATS-125996705.xml
 
