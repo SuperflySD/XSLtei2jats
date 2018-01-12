@@ -66,6 +66,14 @@
                      </subj-group>
                  </article-categories>-->
 
+                <xsl:for-each select="tei:fileDesc/tei:sourceDesc/tei:biblStruct/tei:idno">
+                    <article-id pub-id-type="@*">
+                        <xsl:value-of select="string(.)"/>
+                    </article-id>
+                </xsl:for-each>
+
+
+
                 <title-group>
                     <article-title>
                         <xsl:value-of select="tei:fileDesc/tei:titleStmt/tei:title"/>
@@ -167,12 +175,7 @@
                         </monogr>
                     </xsl:for-each>
 
-                    <xsl:for-each select="tei:idno">
-                        <idno>
-                            <xsl:copy-of select="@*"/>
-                            <xsl:value-of select="string(.)"/>
-                        </idno>
-                    </xsl:for-each>
+
 
                     <xsl:for-each select="tei:note">
                         <note>
