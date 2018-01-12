@@ -47,39 +47,21 @@
                                 <country></country>
                             </publisher-loc>-->
 
-                            <!--                     to be moved                                -->
-                            <!--<availability>
-                                <xsl:copy-of select="tei:availability/@*"/>
-                                <xsl:value-of select="tei:availability"/>
-                            </availability>-->
                         </publisher>
                     </xsl:for-each>
                 </xsl:for-each>
             </journal-meta>
             <article-meta>
-                <!-- need to realise-->
-                <!--  <article-id pub-id-type="publisher-id"></article-id>
-                 <article-id pub-id-type="doi"></article-id>
-                 <article-categories>
-                     <subj-group subj-group-type="heading">
-                         <subject></subject>
-                     </subj-group>
-                 </article-categories>-->
-
                 <xsl:for-each select="tei:fileDesc/tei:sourceDesc/tei:biblStruct/tei:idno">
-                    <article-id pub-id-type="@*">
+                    <article-id pub-id-type="{attribute::type}">
                         <xsl:value-of select="string(.)"/>
                     </article-id>
                 </xsl:for-each>
-
-
-
                 <title-group>
                     <article-title>
                         <xsl:value-of select="tei:fileDesc/tei:titleStmt/tei:title"/>
                     </article-title>
                 </title-group>
-
                 <contrib-group>
                     <xsl:for-each select="tei:fileDesc/tei:sourceDesc/tei:biblStruct/tei:analytic/tei:author">
                         <contrib contrib-type="author">
@@ -148,34 +130,48 @@
                 </xsl:for-each>
 
 
-                <!--Replace with appropriate JATS tag!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
                 <xsl:for-each select="tei:fileDesc/tei:sourceDesc/tei:biblStruct">
-                    <xsl:for-each select="tei:monogr">
-                        <monogr>
-                            <xsl:for-each select="tei:title">
-                                <title>
-                                    <xsl:copy-of select="@*"/>
-                                    <xsl:value-of select="string(.)"/>
-                                </title>
-                            </xsl:for-each>
-                            <xsl:for-each select="tei:indo">
-                                <idno>
-                                    <xsl:copy-of select="@*"/>
-                                    <xsl:value-of select="string(.)"/>
-                                </idno>
-                            </xsl:for-each>
-                            <xsl:for-each select="tei:imprint">
-                                <xsl:for-each select="tei:biblScope">
-                                    <biblScope>
-                                        <xsl:copy-of select="@*"/>
-                                        <xsl:value-of select="string(.)"/>
-                                    </biblScope>
-                                </xsl:for-each>
-                            </xsl:for-each>
-                        </monogr>
-                    </xsl:for-each>
+                 <!--   <xsl:if test="tei:monogr/tei:imprint/tei:date/@when">
+                        <date>
+                            <xsl:value-of select="tei:monogr/tei:imprint/tei:date/@when"/>
+                        </date>
+                    </xsl:if>-->
+                    <xsl:if test="tei:monogr/tei:imprint/tei:biblScope[@unit='volume']">
+                        <volume>
+                            <xsl:value-of
+                                    select="tei:monogr/tei:imprint/tei:biblScope[@unit='volume']"/>
+                        </volume>
+                    </xsl:if>
+                    <xsl:if test="tei:monogr/tei:imprint/tei:biblScope[@unit='issue']">
+                        <issue>
+                            <xsl:value-of
+                                    select="tei:monogr/tei:imprint/tei:biblScope[@unit='issue']"/>
+                        </issue>
+                    </xsl:if>
+                    <xsl:if test="tei:monogr/tei:imprint/tei:biblScope[@unit='page']">
+                        <xsl:choose>
+                            <xsl:when
+                                    test="tei:monogr/tei:imprint/tei:biblScope[@unit='page']/@from | tei:monogr/tei:imprint/tei:biblScope[@unit='page']/@to">
+                                <fpage>
+                                    <xsl:value-of
+                                            select="tei:monogr/tei:imprint/tei:biblScope[@unit='page']/@from"/>
+                                </fpage>
+                                <lpage>
+                                    <xsl:value-of
+                                            select="tei:monogr/tei:imprint/tei:biblScope[@unit='page']/@to"/>
+                                </lpage>
+                            </xsl:when>
 
-
+                            <xsl:otherwise>
+                                <fpage>
+                                    <xsl:value-of select="tei:monogr/tei:imprint/tei:biblScope[@unit='page']"/>
+                                </fpage>
+                                <lpage>
+                                    <xsl:value-of select="tei:monogr/tei:imprint/tei:biblScope[@unit='page']"/>
+                                </lpage>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                    </xsl:if>
 
                     <xsl:for-each select="tei:note">
                         <note>
@@ -202,7 +198,6 @@
                         <copyright-statement>
                             <xsl:value-of select="tei:fileDesc/tei:publicationStmt/tei:availability/tei:p"/>
                         </copyright-statement>
-                        <!--<copyright-year>2017</copyright-year>-->
                     </permissions>
                 </xsl:if>
 
