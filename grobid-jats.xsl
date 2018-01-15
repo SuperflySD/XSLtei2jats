@@ -138,12 +138,12 @@
                                                     </state>
                                                 </xsl:if>
                                             </xsl:for-each>
-                                            <xsl:for-each select="tei:email">
-                                                <email>
-                                                    <xsl:value-of select="string(.)"/>
-                                                </email>
-                                            </xsl:for-each>
                                     </xsl:if>
+                                    <xsl:for-each select="tei:email">
+                                        <email>
+                                            <xsl:value-of select="string(.)"/>
+                                        </email>
+                                    </xsl:for-each>
 
                                 </corresp>
                             </xsl:when>
