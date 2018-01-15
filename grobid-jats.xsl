@@ -33,22 +33,24 @@
                 <!--ISSN-->
                 <xsl:if test="tei:fileDesc/tei:sourceDesc/tei:biblStruct/tei:monogr/tei:idno[@type='ISSN']">
                     <issn publication-format="print">
-                        <xsl:value-of select="tei:fileDesc/tei:sourceDesc/tei:biblStruct/tei:monogr/tei:idno[@type='ISSN']"/>
+                        <xsl:value-of
+                                select="tei:fileDesc/tei:sourceDesc/tei:biblStruct/tei:monogr/tei:idno[@type='ISSN']"/>
                     </issn>
                 </xsl:if>
 
                 <xsl:if test="tei:fileDesc/tei:sourceDesc/tei:biblStruct/tei:monogr/tei:idno[@type='eISSN']">
                     <issn publication-format="electronic">
-                        <xsl:value-of select="tei:fileDesc/tei:sourceDesc/tei:biblStruct/tei:monogr/tei:idno[@type='eISSN']"/>
+                        <xsl:value-of
+                                select="tei:fileDesc/tei:sourceDesc/tei:biblStruct/tei:monogr/tei:idno[@type='eISSN']"/>
                     </issn>
                 </xsl:if>
 
                 <!--publisher-->
                 <xsl:if test="tei:fileDesc/tei:publicationStmt">
-                    <xsl:if test="tei:publisher">
-                        <publisher>
+                    <publisher>
+                        <xsl:if test="tei:fileDesc/tei:publicationStmt/tei:publisher">
                             <publisher-name>
-                                <xsl:value-of select="string(.)"/>
+                                <xsl:value-of select="tei:fileDesc/tei:publicationStmt/tei:publisher"/>
                             </publisher-name>
                             <!--need to realise-->
                             <!--<publisher-loc>
@@ -57,8 +59,8 @@
                                 <country></country>
                             </publisher-loc>-->
 
-                        </publisher>
-                    </xsl:if>
+                        </xsl:if>
+                    </publisher>
                 </xsl:if>
             </journal-meta>
             <article-meta>
