@@ -84,7 +84,8 @@
 
                             </string-name>
 
-
+                            <xsl:if test="tei:affiliation/tei:orgName[@type='department']|
+                            tei:affiliation/tei:orgName[@type='institution']|tei:affiliation/tei:address">
                             <aff rid="aff1">
                                 <xsl:for-each select="tei:affiliation/tei:orgName[@type='department']">
                                     <department>
@@ -128,6 +129,7 @@
                                     </email>
                                 </xsl:for-each>
                             </aff>
+                            </xsl:if>
                         </contrib>
                     </xsl:for-each>
                 </contrib-group>
