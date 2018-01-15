@@ -2,7 +2,7 @@
 
 if [ "$SAXON9_HOME" = "" ] ; then
   if [ -f saxon9he.jar ] ; then
-    SAXON9=saxon9he.jar
+    SAXON9=../saxon9he.jar
   else
     echo Looks like you need to download Saxon.  Please see the README.md file.
     exit
@@ -19,17 +19,15 @@ else
     fi
   fi
 fi
+cd ./TEI/
+for testfile in `ls *tei.xml`
+do
+  filename=${testfile%.*.*.*}
+  echo "Converting $testfile to $filename"
+  java -jar $SAXON9 -xsl:../grobid-jats.xsl -s:${testfile} > ../JATS-NO-META-Inserted/JATS-${filename}.xml
+done
 
-#HTML
- # java -jar $SAXON9 -xsl:jats2html.xsl -s:"126489119.pdf.tei.xml">HTML-126489119.html
+  # java -jar $SAXON9 -xsl:grobid-jats.xsl -s:"124643943.pdf.tei.xml">JATS-124643943.xml
 
-#  java -jar $SAXON9 -xsl:grobid-jats.xsl -s:"123727552.pdf.tei.xml"> result-JATS.xml
-#  java -jar $SAXON9 -xsl:grobid-jats.xsl -s:"p253-barberis.pdf.tei.xml"> JATS-p253-barberis.xml
-  # java -jar $SAXON9 -xsl:grobid-jats.xsl -s:"125773301.pdf.tei.xml">JATS-125773301.xml
-  # java -jar $SAXON9 -xsl:grobid-jats.xsl -s:"125996705.pdf.tei.xml">JATS-125996705.xml
 
-  # java -jar $SAXON9 -xsl:grobid-jats.xsl -s:"126489113.pdf.tei.xml">JATS-126489113.xml
-  # java -jar $SAXON9 -xsl:grobid-jats.xsl -s:"126489117.pdf.tei.xml">JATS-126489117.xml
- #  java -jar $SAXON9 -xsl:grobid-jats.xsl -s:"126489118.pdf.tei.xml">JATS-126489118.xml
-  # java -jar $SAXON9 -xsl:grobid-jats.xsl -s:"126489119.pdf.tei.xml">JATS-126489119.xml
 

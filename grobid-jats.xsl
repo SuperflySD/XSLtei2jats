@@ -65,13 +65,17 @@
                 <contrib-group>
                     <xsl:for-each select="tei:fileDesc/tei:sourceDesc/tei:biblStruct/tei:analytic/tei:author">
                         <contrib contrib-type="author">
+
                             <string-name>
+                                <xsl:for-each select="tei:persName/tei:forename">
+                                    <given-names>
+                                        <xsl:value-of select="string(.)"/>
+                                    </given-names>
+                                </xsl:for-each>
                                 <surname>
                                     <xsl:value-of select="tei:persName/tei:surname"/>
                                 </surname>
-                                <given-names>
-                                    <xsl:value-of select="tei:persName/tei:forename"/>
-                                </given-names>
+
                             </string-name>
                             <aff rid="aff1">
                                 <xsl:for-each select="tei:affiliation/tei:orgName[@type='department']">
@@ -131,11 +135,11 @@
 
 
                 <xsl:for-each select="tei:fileDesc/tei:sourceDesc/tei:biblStruct">
-                 <!--   <xsl:if test="tei:monogr/tei:imprint/tei:date/@when">
-                        <date>
-                            <xsl:value-of select="tei:monogr/tei:imprint/tei:date/@when"/>
-                        </date>
-                    </xsl:if>-->
+                    <!--   <xsl:if test="tei:monogr/tei:imprint/tei:date/@when">
+                           <date>
+                               <xsl:value-of select="tei:monogr/tei:imprint/tei:date/@when"/>
+                           </date>
+                       </xsl:if>-->
                     <xsl:if test="tei:monogr/tei:imprint/tei:biblScope[@unit='volume']">
                         <volume>
                             <xsl:value-of
