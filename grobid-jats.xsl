@@ -116,6 +116,11 @@
                                                     <xsl:value-of select="tei:postCode"/>
                                                 </postCode>
                                             </xsl:if>
+                                            <xsl:if test="tei:addrLine">
+                                                <addr-line>
+                                                    <xsl:value-of select="tei:addrLine"/>
+                                                </addr-line>
+                                            </xsl:if>
                                             <xsl:if test="tei:settlement">
                                                 <settlement>
                                                     <xsl:value-of select="tei:settlement"/>
