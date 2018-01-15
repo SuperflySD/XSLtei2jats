@@ -34,8 +34,8 @@
                 <issn ></issn>-->
 
                 <!--publisher-->
-                <xsl:for-each select="tei:fileDesc/tei:publicationStmt">
-                    <xsl:for-each select="tei:publisher">
+                <xsl:if test="tei:fileDesc/tei:publicationStmt">
+                    <xsl:if test="tei:publisher">
                         <publisher>
                             <publisher-name>
                                 <xsl:value-of select="string(.)"/>
@@ -48,8 +48,8 @@
                             </publisher-loc>-->
 
                         </publisher>
-                    </xsl:for-each>
-                </xsl:for-each>
+                    </xsl:if>
+                </xsl:if>
             </journal-meta>
             <article-meta>
                 <xsl:for-each select="tei:fileDesc/tei:sourceDesc/tei:biblStruct/tei:idno">
