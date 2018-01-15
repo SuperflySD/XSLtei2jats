@@ -112,9 +112,14 @@
                                     <xsl:for-each select="tei:affiliation/tei:address">
                                         <address>
                                             <xsl:if test="tei:postCode">
-                                                <postCode>
+                                                <postal-code>
                                                     <xsl:value-of select="tei:postCode"/>
-                                                </postCode>
+                                                </postal-code>
+                                            </xsl:if>
+                                            <xsl:if test="tei:postBox">
+                                                <addr-line>
+                                                    <xsl:value-of select="tei:postBox"/>
+                                                </addr-line>
                                             </xsl:if>
                                             <xsl:if test="tei:addrLine">
                                                 <addr-line>
