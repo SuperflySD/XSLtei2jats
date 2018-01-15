@@ -76,11 +76,11 @@
                                     <xsl:value-of select="tei:persName/tei:surname"/>
                                 </surname>
 
-                            <xsl:if test="tei:persName/tei:roleName">
-                                <role>
-
-                                </role>
-                            </xsl:if>
+                                <xsl:if test="tei:persName/tei:roleName">
+                                    <role>
+                                        <xsl:value-of select="tei:persName/tei:roleName"/>
+                                    </role>
+                                </xsl:if>
 
                             </string-name>
 
