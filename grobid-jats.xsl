@@ -172,7 +172,7 @@
 
                                     <xsl:if test="tei:affiliation/tei:orgName[@type='department']|
                             tei:affiliation/tei:orgName[@type='institution']|tei:affiliation/tei:address">
-                                        <aff rid="aff1">
+                                        <aff rid="{tei:affiliation/attribute::key}">
                                             <xsl:for-each select="tei:affiliation/tei:orgName[@type='department']">
                                                 <department>
                                                     <xsl:value-of select="string(.)"/>
