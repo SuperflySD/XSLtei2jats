@@ -7,3 +7,5 @@ build
 classes
 *.log
 
+/result.xml
+/TEI - 643c9825df31da4fd03781751237184b6b8cd7.xml
