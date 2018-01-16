@@ -162,11 +162,11 @@
                                             <xsl:value-of select="tei:persName/tei:surname"/>
                                         </surname>
 
-                                        <xsl:if test="tei:persName/tei:roleName">
+                                        <xsl:for-each select="tei:persName/tei:roleName">
                                             <role>
-                                                <xsl:value-of select="tei:persName/tei:roleName"/>
+                                                <xsl:value-of select="string(.)"/>
                                             </role>
-                                        </xsl:if>
+                                        </xsl:for-each>
 
                                     </string-name>
 
