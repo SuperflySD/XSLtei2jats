@@ -94,50 +94,50 @@
 
                                     <xsl:if test="tei:affiliation/tei:orgName[@type='department']|
                             tei:affiliation/tei:orgName[@type='institution']|tei:affiliation/tei:address">
-                                            <xsl:for-each select="tei:affiliation/tei:orgName[@type='department']">
-                                                <institution>
-                                                    <xsl:value-of select="string(.)"/>
-                                                </institution>
-                                            </xsl:for-each>
-                                            <xsl:for-each select="tei:affiliation/tei:orgName[@type='institution']">
-                                                <institution>
-                                                    <xsl:value-of select="string(.)"/>
-                                                </institution>
-                                            </xsl:for-each>
-                                            <xsl:for-each select="tei:affiliation/tei:address">
-                                                <xsl:if test="tei:postCode">
-                                                    <postal-code>
-                                                        <xsl:value-of select="tei:postCode"/>
-                                                    </postal-code>
-                                                </xsl:if>
-                                                <xsl:if test="tei:postBox">
-                                                    <addr-line>
-                                                        <xsl:value-of select="tei:postBox"/>
-                                                    </addr-line>
-                                                </xsl:if>
-                                                <xsl:if test="tei:addrLine">
-                                                    <addr-line>
-                                                        <xsl:value-of select="tei:addrLine"/>
-                                                    </addr-line>
-                                                </xsl:if>
-                                                <xsl:if test="tei:settlement">
-                                                    <city>
-                                                        <xsl:value-of select="tei:settlement"/>
-                                                    </city>
-                                                </xsl:if>
-                                                <xsl:if test="tei:country">
-                                                    <country>
-                                                        <xsl:copy-of select="tei:country/@*"/>
-                                                        <xsl:value-of select="tei:country"/>
-                                                    </country>
-                                                </xsl:if>
-                                                <xsl:if test="tei:region">
-                                                    <state>
-                                                        <xsl:copy-of select="tei:region/@*"/>
-                                                        <xsl:value-of select="tei:region"/>
-                                                    </state>
-                                                </xsl:if>
-                                            </xsl:for-each>
+                                        <xsl:for-each select="tei:affiliation/tei:orgName[@type='department']">
+                                            <institution>
+                                                <xsl:value-of select="string(.)"/>
+                                            </institution>
+                                        </xsl:for-each>
+                                        <xsl:for-each select="tei:affiliation/tei:orgName[@type='institution']">
+                                            <institution>
+                                                <xsl:value-of select="string(.)"/>
+                                            </institution>
+                                        </xsl:for-each>
+                                        <xsl:for-each select="tei:affiliation/tei:address">
+                                            <xsl:if test="tei:postCode">
+                                                <postal-code>
+                                                    <xsl:value-of select="tei:postCode"/>
+                                                </postal-code>
+                                            </xsl:if>
+                                            <xsl:if test="tei:postBox">
+                                                <addr-line>
+                                                    <xsl:value-of select="tei:postBox"/>
+                                                </addr-line>
+                                            </xsl:if>
+                                            <xsl:if test="tei:addrLine">
+                                                <addr-line>
+                                                    <xsl:value-of select="tei:addrLine"/>
+                                                </addr-line>
+                                            </xsl:if>
+                                            <xsl:if test="tei:settlement">
+                                                <city>
+                                                    <xsl:value-of select="tei:settlement"/>
+                                                </city>
+                                            </xsl:if>
+                                            <xsl:if test="tei:country">
+                                                <country>
+                                                    <xsl:copy-of select="tei:country/@*"/>
+                                                    <xsl:value-of select="tei:country"/>
+                                                </country>
+                                            </xsl:if>
+                                            <xsl:if test="tei:region">
+                                                <state>
+                                                    <xsl:copy-of select="tei:region/@*"/>
+                                                    <xsl:value-of select="tei:region"/>
+                                                </state>
+                                            </xsl:if>
+                                        </xsl:for-each>
                                     </xsl:if>
                                     <xsl:for-each select="tei:email">
                                         <email>
@@ -151,25 +151,25 @@
                             <!--Author-->
                             <xsl:otherwise>
                                 <contrib contrib-type="author">
+                                    <xsl:if test="tei:persName/tei:surname|tei:persName/tei:forename">
+                                        <string-name>
+                                            <xsl:for-each select="tei:persName/tei:forename">
+                                                <given-names>
+                                                    <xsl:value-of select="string(.)"/>
+                                                </given-names>
+                                            </xsl:for-each>
+                                            <surname>
+                                                <xsl:value-of select="tei:persName/tei:surname"/>
+                                            </surname>
 
-                                    <string-name>
-                                        <xsl:for-each select="tei:persName/tei:forename">
-                                            <given-names>
-                                                <xsl:value-of select="string(.)"/>
-                                            </given-names>
-                                        </xsl:for-each>
-                                        <surname>
-                                            <xsl:value-of select="tei:persName/tei:surname"/>
-                                        </surname>
+                                            <xsl:for-each select="tei:persName/tei:roleName">
+                                                <role>
+                                                    <xsl:value-of select="string(.)"/>
+                                                </role>
+                                            </xsl:for-each>
 
-                                        <xsl:for-each select="tei:persName/tei:roleName">
-                                            <role>
-                                                <xsl:value-of select="string(.)"/>
-                                            </role>
-                                        </xsl:for-each>
-
-                                    </string-name>
-
+                                        </string-name>
+                                    </xsl:if>
                                     <xsl:if test="tei:affiliation/tei:orgName[@type='department']|
                             tei:affiliation/tei:orgName[@type='institution']|tei:affiliation/tei:address">
                                         <aff rid="{tei:affiliation/attribute::key}">
